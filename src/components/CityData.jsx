@@ -1,24 +1,18 @@
 import Grid from "@mui/material/Grid";
-import MovieCard from "./MovieCard";
+
 import Input from "./Input";
-import { useEffect, useState, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchMovies,
-  selectMovies,
-  selectStatus,
-  selectError,
-  selectTotal,
-} from "../store/movieSlice";
+import { useState } from "react";
+
 import CityDetails from "./CityDetails";
 import FiveDaysComponent from "./FiveDaysComponent";
 
-import Video from "./Video";
+// import Video from "./Video";
+import axios from "axios";
 
 import { colors } from "../constants";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const apiKey = "18a85a90";
+const apiKey = "tkS7oaysfF2qKbLjlgGI6bKGHipxekBH";
 
 const city = { id: 1, name: "cairo", temp: "33" };
 
@@ -26,34 +20,45 @@ const CityData = () => {
   const [searchPharase, setSearchPhrase] = useState("");
   const [msg, setMsg] = useState("");
 
-  const dispatch = useDispatch();
-  const movies = useSelector(selectMovies);
-  const status = useSelector(selectStatus);
-  const error = useSelector(selectError);
+  const getLocationKey = (city) => {
+    let keyQuery = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${city}`;
+    let key = "";
 
-  const getMovies = useCallback((page = 1) => {
-    if (searchPharase === "") {
-      setMsg("");
-    } else {
-      setMsg("");
+    axios
+      .get(keyQuery, {
+        headers: {
+          "Access-Control-Allow-Credentials": true,
+        },
+        responseType: "json",
+      })
+      .then((response) => {
+        console.error("key response", response.data[0].Key);
+      });
 
-      let query = `http://www.omdbapi.com/?s=${searchPharase}&apikey=${apiKey}&page=${page}`;
-
-      dispatch(fetchMovies(query));
-
-      if (status === "failed") {
-        setMsg(error);
-      }
-    }
-  });
-  useEffect(() => {
-    getMovies(1);
-  }, [searchPharase, dispatch]);
-
+    // axios
+    //   .get(KeyQuery)
+    //   .then((response) => {
+    //     console.error("key response", response.data[0].Key);
+    //     key = response.data[0].Key;
+    //     console.log("key", key);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data:", error);
+    //   });
+    // let cityQuery = `http://dataservice.accuweather.com/currentconditions/v1/127164?apikey=tkS7oaysfF2qKbLjlgGI6bKGHipxekBH`;
+    // axios
+    //   .get(cityQuery)
+    //   .then((response) => {
+    //     console.error("city response", response);
+    //     // console.log("key", key);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data:", error);
+    //   });
+  };
   const handleSearch = (e) => {
     setSearchPhrase(e);
-
-    getMovies(1);
+    getLocationKey(searchPharase);
   };
 
   return (

@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import logo from "../../public/images/logo.png";
+import logo from "../../public/images/logo2.png";
 import { colors } from "../constants";
 
 const AppTitle = () => {

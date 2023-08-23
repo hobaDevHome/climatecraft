@@ -84,3 +84,33 @@ body {
 .arrow:hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
+
+.scrollable-content {
+  overflow: hidden; /* Hide scroll bars */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS devices */
+}
+
+scrollable-content::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Apply styles for the scrollable content */
+.scrollable-content {
+  overflow: hidden; /* Hide scroll bars */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS devices */
+}
+
+/* Style for the inner scroll area (webkit-based browsers) */
+.scrollable-content::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+}

@@ -10,8 +10,7 @@ export const fetchMovies = createAsyncThunk(
   async (API_URL) => {
     const response = await axios.get(API_URL);
     return {
-      list: response.data.Search,
-      total: response.data.totalResults / 10,
+      list: response,
     };
   }
 );
@@ -22,7 +21,6 @@ const movieSlice = createSlice({
     movies: [],
     status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,
-    total: 0,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -33,7 +31,6 @@ const movieSlice = createSlice({
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.movies = action.payload.list;
-        state.total = action.payload.total;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.status = "failed";
@@ -48,4 +45,3 @@ export default movieSlice.reducer;
 export const selectMovies = (state) => state.movies.movies;
 export const selectStatus = (state) => state.movies.status;
 export const selectError = (state) => state.movies.error;
-export const selectTotal = (state) => state.movies.total;
